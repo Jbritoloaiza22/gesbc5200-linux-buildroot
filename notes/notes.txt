@@ -1,0 +1,98 @@
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Abre la configuración del kernel Linux mediante menuconfig.
+ *
+ * Este comando lanza la interfaz de configuración del kernel Linux
+ * utilizando el sistema de compilación de Buildroot. Permite al usuario
+ * personalizar opciones del kernel como controladores, arquitectura,
+ * sistema de archivos, etc.
+ *
+ * @command
+ * BR2_EXTERNAL=../buildroot-external-microchip make linux-menuconfig
+ * BR2_EXTERNAL=../buildroot-external-microchip make linux-reconfigure
+ * BR2_EXTERNAL=../buildroot-external-microchip make linux
+ *
+ * @note Asegúrate de tener configurado correctamente el entorno Buildroot
+ * y que el directorio externo contenga los overlays necesarios.
+ */
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Abre la configuración principal de Buildroot mediante menuconfig.
+ *
+ * Este comando permite configurar todos los aspectos del sistema embebido,
+ * incluyendo toolchain, paquetes, opciones del kernel, sistema de archivos,
+ * y configuraciones específicas del hardware.
+ *
+ * @command
+ * BR2_EXTERNAL=../buildroot-external-microchip make menuconfig
+ *
+ * @note Los cambios se guardan en el archivo .config dentro del directorio output/.
+ */
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Elimina todos los archivos Device Tree Blob (DTB) generados.
+ *
+ * Este comando limpia los archivos .dtb generados en la carpeta de imágenes
+ * de salida. Es útil cuando se desea forzar la regeneración de los DTB
+ * tras modificar archivos .dts o .dtsi.
+ *
+ * @command
+ * rm -f output/images/*.dtb
+ *
+ * @warning Asegúrate de no eliminar accidentalmente otros archivos importantes.
+ */
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Limpia el directorio de compilación del kernel Linux.
+ *
+ * Este comando elimina todos los archivos generados por la compilación del kernel,
+ * permitiendo una reconstrucción limpia desde cero. Es útil cuando se sospecha
+ * de inconsistencias o se han realizado cambios profundos en la configuración.
+ *
+ * @command
+ * BR2_EXTERNAL=../buildroot-external-microchip make linux-dirclean
+ *
+ * @note No afecta la configuración de Buildroot ni otros paquetes.
+ */
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Compila todo el sistema embebido con Buildroot.
+ *
+ * Este comando ejecuta el proceso completo de compilación de Buildroot,
+ * incluyendo la toolchain, el kernel, el sistema de archivos raíz y los
+ * paquetes seleccionados. Utiliza la configuración definida en .config.
+ *
+ * @command
+ * BR2_EXTERNAL=../buildroot-external-microchip make
+ *
+ * @note Asegúrate de haber configurado correctamente el sistema antes de compilar.
+ */
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/**
+ * @brief Carga la configuración predeterminada para la placa SAMA5D2 Xplained.
+ *
+ * Este comando inicializa el archivo `.config` de Buildroot usando una
+ * configuración base predefinida (`atmel_sama5d2_xplained_mmc_defconfig`),
+ * que incluye parámetros específicos para la arquitectura ARM, el kernel,
+ * el sistema de archivos raíz y los periféricos compatibles con la placa.
+ *
+ * @command
+ * BR2_EXTERNAL=../buildroot-external-microchip make atmel_sama5d2_xplained_mmc_defconfig
+ *
+ * @note Este paso es obligatorio antes de ejecutar `make` para compilar el sistema.
+ * @warning Este comando sobrescribirá cualquier configuración previa en `.config`.
+ */
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+rootfs commands
+
+	sudo cp /home/vboxuser/Documents/GESBC-5200/buildroot/buildroot-mchp/output/images/rootfs.tar .
+	sudo tar -xpf rootfs.tar
+
+mount USB
+mkdir -p /mnt/usb
+mount -t vfat /dev/sda1 /mnt/usb
+mount -t vfat /dev/sdb1 /mnt/usb
+
+buscar
+grep -rnw --include="*.c" --include="*.h" . -e 'vmalloc'
+setenv bootargs 'console=ttyS0,115200 root=/dev/mmcblk0p2 rw rootwait'

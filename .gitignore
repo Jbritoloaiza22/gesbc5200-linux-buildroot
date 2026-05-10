@@ -1,0 +1,29 @@
+# Buildroot
+output/
+dl/
+
+# Compilados
+*.o
+*.a
+*.so
+*.ko
+*.mod
+*.cmd
+*.dtb
+
+# Imágenes
+*.img
+*.bin
+*.tar
+*.tar.gz
+
+# Logs
+*.log
+
+# IDE
+.vscode/
+.idea/
+
+# Temporales
+tmp/
+.cache/
