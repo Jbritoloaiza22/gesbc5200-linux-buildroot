@@ -7,3 +7,6 @@
 [submodule "buildroot/buildroot-mchp"]
 	path = buildroot/buildroot-mchp
 	url = https://github.com/linux4microchip/buildroot-mchp.git
+[submodule "kernel"]
+	path = kernel
+	url = https://github.com/Jbritoloaiza22/linux-4.14.79.git
