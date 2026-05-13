@@ -23,5 +23,5 @@ jobs:
           docker run --rm \
             -u $(id -u):$(id -g) \
             -v ${{ github.workspace }}:/workspace/project \
-            buildroot-arm-env \
+            buildroot-env \
             bash -c "make -C buildroot/buildroot-mchp FORCE_UNSAFE_CONFIGURE=1"
