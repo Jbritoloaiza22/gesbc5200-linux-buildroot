@@ -151,9 +151,7 @@
  * required for cross-compiling the embedded Linux system using Buildroot.
  *
  * @command
- * sudo docker build \
- *     -t buildroot-arm-env \
- *     -f docker/Dockerfile .
+ * sudo docker build  -t buildroot-arm-env -f docker/Dockerfile .
  */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -165,9 +163,7 @@
  * workspace at `/workspace/project`.
  *
  * @command
- * sudo docker run -it --rm \
- *     -v ~/Documents/gesbc-5200-linux-buildroot:/workspace/project \
- *     buildroot-arm-env
+ * sudo docker run -it --rm -u $(id -u):$(id -g) -v $(pwd):/workspace/project buildroot-arm-env
  *
  * @note The `--rm` option automatically removes the container after exit.
  */
