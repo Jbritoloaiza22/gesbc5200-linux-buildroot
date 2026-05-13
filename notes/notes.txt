@@ -1,98 +1,174 @@
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /**
- * @brief Abre la configuración del kernel Linux mediante menuconfig.
+ * @brief Opens the Linux kernel configuration menu using menuconfig.
  *
- * Este comando lanza la interfaz de configuración del kernel Linux
- * utilizando el sistema de compilación de Buildroot. Permite al usuario
- * personalizar opciones del kernel como controladores, arquitectura,
- * sistema de archivos, etc.
+ * This command launches the Linux kernel configuration interface
+ * through the Buildroot build system. It allows the user to customize
+ * kernel options such as drivers, architecture, file systems, and more.
  *
  * @command
  * BR2_EXTERNAL=../buildroot-external-microchip make linux-menuconfig
  * BR2_EXTERNAL=../buildroot-external-microchip make linux-reconfigure
  * BR2_EXTERNAL=../buildroot-external-microchip make linux
  *
- * @note Asegúrate de tener configurado correctamente el entorno Buildroot
- * y que el directorio externo contenga los overlays necesarios.
+ * @note Make sure the Buildroot environment is properly configured
+ * and the external directory contains the required overlays.
  */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /**
- * @brief Abre la configuración principal de Buildroot mediante menuconfig.
+ * @brief Opens the main Buildroot configuration menu using menuconfig.
  *
- * Este comando permite configurar todos los aspectos del sistema embebido,
- * incluyendo toolchain, paquetes, opciones del kernel, sistema de archivos,
- * y configuraciones específicas del hardware.
+ * This command allows configuring all aspects of the embedded system,
+ * including the toolchain, packages, kernel options, root filesystem,
+ * and hardware-specific settings.
  *
  * @command
  * BR2_EXTERNAL=../buildroot-external-microchip make menuconfig
  *
- * @note Los cambios se guardan en el archivo .config dentro del directorio output/.
+ * @note Changes are saved into the .config file inside the output/ directory.
  */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /**
- * @brief Elimina todos los archivos Device Tree Blob (DTB) generados.
+ * @brief Removes all generated Device Tree Blob (DTB) files.
  *
- * Este comando limpia los archivos .dtb generados en la carpeta de imágenes
- * de salida. Es útil cuando se desea forzar la regeneración de los DTB
- * tras modificar archivos .dts o .dtsi.
+ * This command cleans the generated .dtb files from the output images
+ * directory. It is useful when forcing DTB regeneration after modifying
+ * .dts or .dtsi files.
  *
  * @command
  * rm -f output/images/*.dtb
  *
- * @warning Asegúrate de no eliminar accidentalmente otros archivos importantes.
+ * @warning Make sure not to accidentally delete other important files.
  */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /**
- * @brief Limpia el directorio de compilación del kernel Linux.
+ * @brief Cleans the Linux kernel build directory.
  *
- * Este comando elimina todos los archivos generados por la compilación del kernel,
- * permitiendo una reconstrucción limpia desde cero. Es útil cuando se sospecha
- * de inconsistencias o se han realizado cambios profundos en la configuración.
+ * This command removes all files generated during kernel compilation,
+ * allowing a clean rebuild from scratch. It is useful when inconsistencies
+ * are suspected or major configuration changes were made.
  *
  * @command
  * BR2_EXTERNAL=../buildroot-external-microchip make linux-dirclean
  *
- * @note No afecta la configuración de Buildroot ni otros paquetes.
+ * @note This does not affect the Buildroot configuration or other packages.
  */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /**
- * @brief Compila todo el sistema embebido con Buildroot.
+ * @brief Builds the complete embedded Linux system using Buildroot.
  *
- * Este comando ejecuta el proceso completo de compilación de Buildroot,
- * incluyendo la toolchain, el kernel, el sistema de archivos raíz y los
- * paquetes seleccionados. Utiliza la configuración definida en .config.
+ * This command runs the full Buildroot compilation process,
+ * including the toolchain, Linux kernel, root filesystem,
+ * and all selected packages. It uses the configuration
+ * defined in the .config file.
  *
  * @command
  * BR2_EXTERNAL=../buildroot-external-microchip make
  *
- * @note Asegúrate de haber configurado correctamente el sistema antes de compilar.
+ * @note Ensure the system has been properly configured before building.
  */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 /**
- * @brief Carga la configuración predeterminada para la placa SAMA5D2 Xplained.
+ * @brief Loads the default configuration for the SAMA5D2 Xplained board.
  *
- * Este comando inicializa el archivo `.config` de Buildroot usando una
- * configuración base predefinida (`atmel_sama5d2_xplained_mmc_defconfig`),
- * que incluye parámetros específicos para la arquitectura ARM, el kernel,
- * el sistema de archivos raíz y los periféricos compatibles con la placa.
+ * This command initializes the Buildroot `.config` file using
+ * the predefined `atmel_sama5d2_xplained_mmc_defconfig`,
+ * which contains default settings for the ARM architecture,
+ * Linux kernel, root filesystem, and supported peripherals.
  *
  * @command
  * BR2_EXTERNAL=../buildroot-external-microchip make atmel_sama5d2_xplained_mmc_defconfig
  *
- * @note Este paso es obligatorio antes de ejecutar `make` para compilar el sistema.
- * @warning Este comando sobrescribirá cualquier configuración previa en `.config`.
+ * @note This step is required before running `make` to build the system.
+ * @warning This command overwrites any existing `.config` configuration.
  */
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-rootfs commands
 
-	sudo cp /home/vboxuser/Documents/GESBC-5200/buildroot/buildroot-mchp/output/images/rootfs.tar .
-	sudo tar -xpf rootfs.tar
+/**
+ * @brief Extracts the generated Buildroot root filesystem archive.
+ *
+ * This command copies the generated rootfs.tar image from the Buildroot
+ * output directory and extracts its contents into the current directory.
+ * It is useful for inspecting or modifying the generated root filesystem.
+ *
+ * @commands
+ * sudo cp /home/vboxuser/Documents/GESBC-5200/buildroot/buildroot-mchp/output/images/rootfs.tar .
+ * sudo tar -xpf rootfs.tar
+ */
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-mount USB
-mkdir -p /mnt/usb
-mount -t vfat /dev/sda1 /mnt/usb
-mount -t vfat /dev/sdb1 /mnt/usb
+/**
+ * @brief Mounts a USB storage device into the system.
+ *
+ * These commands create a mount point and mount a FAT-formatted
+ * USB device to the `/mnt/usb` directory.
+ *
+ * @commands
+ * mkdir -p /mnt/usb
+ * mount -t vfat /dev/sda1 /mnt/usb
+ * mount -t vfat /dev/sdb1 /mnt/usb
+ *
+ * @note Replace `/dev/sda1` or `/dev/sdb1` with the correct device node.
+ */
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-buscar
-grep -rnw --include="*.c" --include="*.h" . -e 'vmalloc'
-setenv bootargs 'console=ttyS0,115200 root=/dev/mmcblk0p2 rw rootwait'
+/**
+ * @brief Searches recursively for a symbol or keyword in source files.
+ *
+ * This command searches all `.c` and `.h` files recursively
+ * for occurrences of the specified keyword.
+ *
+ * @command
+ * grep -rnw --include="*.c" --include="*.h" . -e 'vmalloc'
+ *
+ * @note Useful for locating kernel functions, symbols, or APIs.
+ */
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Configures Linux kernel boot arguments in U-Boot.
+ *
+ * This command sets the kernel boot arguments used during system startup.
+ * It configures the serial console, root filesystem device,
+ * read/write mode, and waits for the root device to become available.
+ *
+ * @command
+ * setenv bootargs 'console=ttyS0,115200 root=/dev/mmcblk0p2 rw rootwait'
+ *
+ * @note These settings are typically used in embedded Linux systems booted from MMC/SD storage.
+ */
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Builds the Docker image for the ARM/Buildroot development environment.
+ *
+ * This command builds a Docker image containing all dependencies
+ * required for cross-compiling the embedded Linux system using Buildroot.
+ *
+ * @command
+ * sudo docker build \
+ *     -t buildroot-arm-env \
+ *     -f docker/Dockerfile .
+ */
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @brief Runs the Buildroot Docker development container.
+ *
+ * This command launches an interactive Docker container
+ * and mounts the local project directory into the container
+ * workspace at `/workspace/project`.
+ *
+ * @command
+ * sudo docker run -it --rm \
+ *     -v ~/Documents/gesbc-5200-linux-buildroot:/workspace/project \
+ *     buildroot-arm-env
+ *
+ * @note The `--rm` option automatically removes the container after exit.
+ */
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
