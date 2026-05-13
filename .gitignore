@@ -27,3 +27,6 @@ dl/
 # Temporales
 tmp/
 .cache/
+
+!.github/
+!.github/**
