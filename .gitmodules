@@ -7,6 +7,3 @@
 [submodule "buildroot/buildroot-mchp"]
 	path = buildroot/buildroot-mchp
 	url = https://github.com/Jbritoloaiza22/buildroot-mchp.git
-[submodule "kernel"]
-	path = kernel
-	url = https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
