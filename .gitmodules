@@ -1,0 +1,13 @@
+[submodule "bootstrap"]
+	path = bootstrap
+	url = https://github.com/linux4sam/at91bootstrap.git
+[submodule "buildroot/buildroot-external-microchip"]
+	path = buildroot/buildroot-external-microchip
+	url = https://github.com/linux4sam/buildroot-external-microchip.git
+[submodule "buildroot/buildroot-mchp"]
+	path = buildroot/buildroot-mchp
+	url = https://github.com/Jbritoloaiza22/buildroot-mchp.git
+[submodule "kernel"]
+	path = kernel
+	url = https://github.com/Jbritoloaiza22/linux-5.10.0.git
+	branch = my_linux_5.10_brito
