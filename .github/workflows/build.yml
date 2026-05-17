@@ -1,0 +1,27 @@
+name: Build Buildroot
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Build Docker image
+        run: |
+          docker build -t buildroot-env -f docker/Dockerfile .
+
+      - name: Run Buildroot build
+        run: |
+          docker run --rm \
+            -u $(id -u):$(id -g) \
+            -v ${{ github.workspace }}:/workspace/project \
+            buildroot-env \
+            bash -c "make -C buildroot/buildroot-mchp FORCE_UNSAFE_CONFIGURE=1"
